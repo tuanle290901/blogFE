@@ -1,0 +1,22 @@
+/* CSS cho BlogDetail component */
+.media {
+    margin: 20px 0; /* Khoảng cách giữa các phần tử media */
+}
+
+.media img {
+    max-width: 100px; /* Điều chỉnh kích thước hình ảnh avatar */
+}
+
+.media-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.media-body h5 {
+    margin: 0; /* Xóa margin mặc định của thẻ h5 */
+}
+
+/* Điều chỉnh khoảng cách giữa hình ảnh và nội dung */
+.media .mr-3 {
+    margin-right: 10px; /* Điều chỉnh khoảng cách bên phải hình ảnh */
+}
