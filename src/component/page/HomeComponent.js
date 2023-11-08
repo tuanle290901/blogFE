@@ -1,6 +1,26 @@
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import axiosInstance from "../api/service/AxiosInstance";
 
 
 export default function HomeComponent() {
+    const [blogs, setBlogs] = useState([]);
+    const {blog} = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const blogsResponse = await axiosInstance.get(`/blog/getall`); // Assuming you want to fetch a specific blog
+                const fetchedBlogs = blogsResponse.data;
+                console.log('blog', fetchedBlogs);
+                setBlogs(fetchedBlogs);
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
+            }
+        };
+
+        fetchData();
+    }, [blog]);
     return (
         <div>
 
@@ -11,7 +31,7 @@ export default function HomeComponent() {
                             <a href="single.html" className="h-entry mb-30 v-height gradient">
 
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('../../images/img_2_horizontal.jpg');"}}></div>
+                                     style={{backgroundImage: "url(../../images/img_2_horizontal.jpg)"}}></div>
 
                                 <div className="text">
                                     <span className="date">Apr. 14th, 2022</span>
@@ -33,7 +53,7 @@ export default function HomeComponent() {
                             <a href="single.html" className="h-entry img-5 h-100 gradient">
 
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('../../images/img_1_vertical.jpg');"}}></div>
+                                     style={{backgroundImage: "url(../../images/img_1_vertical.jpg)"}}></div>
 
                                 <div className="text">
                                     <span className="date">Apr. 14th, 2022</span>
@@ -45,7 +65,7 @@ export default function HomeComponent() {
                             <a href="single.html" className="h-entry mb-30 v-height gradient">
 
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('../../images/img_3_horizontal.jpg');"}}></div>
+                                     style={{backgroundImage: "url(../../images/img_3_horizontal.jpg)"}}></div>
 
                                 <div className="text">
                                     <span className="date">Apr. 14th, 2022</span>
@@ -55,7 +75,7 @@ export default function HomeComponent() {
                             <a href="single.html" className="h-entry v-height gradient">
 
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('../../images/img_4_horizontal.jpg');"}}></div>
+                                     style={{backgroundImage: "url(../../images/img_4_horizontal.jpg)"}}></div>
 
                                 <div className="text">
                                     <span className="date">Apr. 14th, 2022</span>
@@ -146,50 +166,22 @@ export default function HomeComponent() {
             <section className="section posts-entry posts-entry-sm bg-light">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 col-lg-3">
-                            <div className="blog-entry">
-                                <a href="single.html" className="img-link">
-                                    <img src="images/img_1_horizontal.jpg" alt="Image" className="img-fluid"/>
-                                </a>
-                                <span className="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                <p><a href="src/component#" className="read-more">Continue Reading</a></p>
-                            </div>
+
+                        {blogs.map((blog) => (
+
+                        <div className="col-md-6 col-lg-3" key={blog.id}>
+                                <div className="blog-entry" >
+                                    <a href="single.html" className="img-link">
+                                        <img src={blog.avatar} alt="Image" className="img-fluid" style={{maxWidth:"100%",height:250,width:300}}/>
+                                    </a>
+                                    <span className="date">{blog.timeComment}</span>
+                                    <h2><a href="single.html">{blog.title}</a></h2>
+                                    <p>{blog.description}</p>
+                                    <p><a href="src/component#" className="read-more">Continue Reading</a></p>
+                                </div>
+
                         </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="blog-entry">
-                                <a href="single.html" className="img-link">
-                                    <img src="images/img_2_horizontal.jpg" alt="Image" className="img-fluid"/>
-                                </a>
-                                <span className="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                <p><a href="src/component#" className="read-more">Continue Reading</a></p>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="blog-entry">
-                                <a href="single.html" className="img-link">
-                                    <img src="images/img_3_horizontal.jpg" alt="Image" className="img-fluid"/>
-                                </a>
-                                <span className="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">UK sees highest inflation in 30 years</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                <p><a href="src/component#" className="read-more">Continue Reading</a></p>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <div className="blog-entry">
-                                <a href="single.html" className="img-link">
-                                    <img src="images/img_4_horizontal.jpg" alt="Image" className="img-fluid"/>
-                                </a>
-                                <span className="date">Apr. 14th, 2022</span>
-                                <h2><a href="single.html">Don’t assume your user data in the cloud is safe</a></h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                                <p><a href="src/component#" className="read-more">Continue Reading</a></p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -297,7 +289,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -324,7 +317,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -351,7 +345,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -380,7 +375,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -407,7 +403,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -434,7 +431,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -463,7 +461,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -490,7 +489,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo sunt tempora dolor
@@ -516,7 +516,8 @@ export default function HomeComponent() {
                                             alt="Image"
                                             className="img-fluid"/>
                                         </figure>
-                                        <span className="d-inline-block mt-1">By <a href="src/component#">David Anderson</a></span>
+                                        <span className="d-inline-block mt-1">By <a
+                                            href="src/component#">David Anderson</a></span>
                                         <span>&nbsp;-&nbsp; July 19, 2019</span>
                                     </div>
 
@@ -549,7 +550,7 @@ export default function HomeComponent() {
                         <div className="col-md-5 order-md-2">
                             <a href="single.html" className="hentry img-1 h-100 gradient">
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('images/img_2_vertical.jpg');"}}></div>
+                                     style={{backgroundImage: "url(images/img_2_vertical.jpg)"}}></div>
                                 <div className="text">
                                     <span>February 12, 2019</span>
                                     <h2>Meta unveils fees on metaverse sales</h2>
@@ -561,7 +562,7 @@ export default function HomeComponent() {
 
                             <a href="single.html" className="hentry img-2 v-height mb30 gradient">
                                 <div className="featured-img"
-                                     style={{backgroundImage: "url('images/img_1_horizontal.jpg');"}}></div>
+                                     style={{backgroundImage: "url(images/img_1_horizontal.jpg)"}}></div>
                                 <div className="text text-sm">
                                     <span>February 12, 2019</span>
                                     <h2>AI can now kill those annoying cookie pop-ups</h2>
@@ -571,7 +572,7 @@ export default function HomeComponent() {
                             <div className="two-col d-block d-md-flex justify-content-between">
                                 <a href="single.html" className="hentry v-height img-2 gradient">
                                     <div className="featured-img"
-                                         style={{backgroundImage: "url('images/img_2_sq.jpg');"}}></div>
+                                         style={{backgroundImage: "url(images/img_2_sq.jpg)"}}></div>
                                     <div className="text text-sm">
                                         <span>February 12, 2019</span>
                                         <h2>Don’t assume your user data in the cloud is safe</h2>
@@ -579,7 +580,7 @@ export default function HomeComponent() {
                                 </a>
                                 <a href="single.html" className="hentry v-height img-2 ms-auto float-end gradient">
                                     <div className="featured-img"
-                                         style={{backgroundImage: "url('images/img_3_sq.jpg');"}}></div>
+                                         style={{backgroundImage: "url(images/img_3_sq.jpg)"}}></div>
                                     <div className="text text-sm">
                                         <span>February 12, 2019</span>
                                         <h2>Startup vs corporate: What job suits you best?</h2>

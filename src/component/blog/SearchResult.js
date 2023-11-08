@@ -10,7 +10,7 @@ export default function SearchResult() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const blogsResponse = await axiosInstance.get(`/blog/getall`); // Assuming you want to fetch a specific blog
+                const blogsResponse = await axiosInstance.get(`/api/blog/getall`); // Assuming you want to fetch a specific blog
                 const fetchedBlogs = blogsResponse.data;
                 console.log('blog', fetchedBlogs);
                 setBlogs(fetchedBlogs);
@@ -38,11 +38,11 @@ export default function SearchResult() {
 
                                 <div className="blog-entry d-flex blog-entry-search-item" key={blog.id}>
                                     <a href="single.html" className="img-link me-4">
-                                        <img src={blog.avatar} alt="Image" className="img-fluid" />
+                                        <img src={blog.avatar} alt="Image" className="img-fluid" style={{maxWidth:"100%",height:150,width:150}}/>
                                     </a>
                                     <div>
-                                        <span className="date">{blog.timeComment}</span>
-                                        <h2><a href="single.html">{blog.title}</a>
+                                        <span className="date">{blog.timeCreate}</span>
+                                        <h2 style={{textAlign:"left"}}><a href="single.html">{blog.title}</a>
                                         </h2>
                                         <p>{blog.description}</p>
                                         <p><a href="single.html" className="btn btn-sm btn-outline-primary">Read

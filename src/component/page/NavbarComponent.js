@@ -1,4 +1,9 @@
-export default function NavbarComponent(){
+import {useNavigate} from "react-router-dom";
+
+export default function headerNavbarComponent(){
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const navigate = useNavigate();
+
     return(
         <div>
         <nav className="site-nav">
@@ -39,7 +44,11 @@ export default function NavbarComponent(){
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="category.html">Culture</a></li>
+
+
+
+
+                                    <li><a href={"/blog/create"}><span onClick={()=>navigate("/blog/create")}>Add Music</span></a></li>
                                     <li><a href="category.html">Business</a></li>
                                     <li><a href="category.html">Politics</a></li>
                                 </ul>
