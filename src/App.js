@@ -3,7 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import BlogDetail from "./component/blog/BlogDetail";
 import SearchResult from "./component/blog/SearchResult";
-
+import CreateDemo from "./component/blog/CreateDemo";
 import {ToastContainer} from "react-toastify";
 import HomeComponent from "./component/page/HomeComponent";
 import PageComponent from "./component/page/PageComponent";
@@ -17,6 +17,7 @@ function App() {
                     <Route path="/blog" element={<BlogDetail/>}/>
                     <Route path="/search" element={<SearchResult/>}/>
                     <Route path="/blog/create" element={<createBlog/>}/>
+                    <Route path="/create" element={<CreateDemo/>}/>
 
                 </Route>
             </Routes>
