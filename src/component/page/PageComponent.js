@@ -1,7 +1,7 @@
 import NavbarComponent from "./NavbarComponent";
 import FooterComponent from "./FooterComponent";
-import HomeComponent from "./HomeComponent";
 import {Outlet} from "react-router-dom";
+import LoaderComponent from "./LoaderComponent";
 
 export default function PageComponent(){
     return (
