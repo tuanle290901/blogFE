@@ -18,7 +18,7 @@ const LoginComponent = () => {
                 email : data.user.email,
                 name : data.user.displayName,
                 password : '',
-                avatar: "https://nhadepso.com/wp-content/uploads/2023/03/cap-nhat-50-hinh-anh-dai-dien-facebook-mac-dinh-dep-doc-la_1.jpg",
+                img: "https://nhadepso.com/wp-content/uploads/2023/03/cap-nhat-50-hinh-anh-dai-dien-facebook-mac-dinh-dep-doc-la_1.jpg",
                 role: {
                     id: 1
                 }
